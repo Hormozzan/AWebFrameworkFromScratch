@@ -1,5 +1,7 @@
+#! ./.venv/bin/python
+
 '''
-A simple web server using built-in wsgiref module
+A simple web application using wsgiref.simple_server.demo_app.
 '''
 
 from wsgiref.simple_server import demo_app, make_server
