@@ -15,10 +15,10 @@ def app(environment, start_response):
     headers = [('Content-Type', f'text/html; charset={ENCODING}')]
 
     qdict = parse_qs(environment['QUERY_STRING'])
-    name = qdict.get('name', ['World'])[0]
+    names = ' & '.join([i for i in qdict.get('name', ['World']) if len(i) > 0 and i != ' '])
 
     start_response(status, headers)
-    return [f'<h1>Hello, {name}!</h1>'.encode(ENCODING)]
+    return [f'<h1>Hello, {names}!</h1>'.encode(ENCODING)]
 
 if __name__ == '__main__':
     with make_server(host='localhost', port=8000, app=app) as server:
