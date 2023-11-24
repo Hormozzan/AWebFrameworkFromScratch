@@ -1,11 +1,11 @@
 #! ./.venv/bin/python
 
 '''
-A custom web application. Greets the incoming 'name' query element if availabe;
-otherwise, greets the World!
+Custom web application based on low-level WSGI concepts.
+Greet the incoming 'name' query element if availabe;
+otherwise, greet the World!
 '''
 
-from wsgiref.simple_server import make_server
 from urllib.parse import parse_qs
 
 ENCODING = 'utf8'
@@ -19,7 +19,3 @@ def app(environment, start_response):
 
     start_response(status, headers)
     return [f'<h1>Hello, {names}!</h1>'.encode(ENCODING)]
-
-if __name__ == '__main__':
-    with make_server(host='localhost', port=8000, app=app) as server:
-        server.serve_forever()
