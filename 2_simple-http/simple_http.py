@@ -45,17 +45,17 @@ class Response:
         '''
         status_string = responses.get(self._status_code, 'UNKNOWN')
         return f'{self._status_code} {status_string}'
-    
+
     @property
     def headers(self) -> list[tuple[str, str]]:
         '''
         Return header items of the response
         '''
         return self._headers.items()
-    
+
     def __iter__(self) -> bytes:
         '''
-        Return elements of the response body as a generator 
+        Return elements of the response body as a generator
         '''
         for i in self.body:
             yield i if isinstance(i, bytes) else i.encode(self._encoding)
