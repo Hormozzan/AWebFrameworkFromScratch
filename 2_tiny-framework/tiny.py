@@ -1,5 +1,5 @@
 '''
-Request/Response abstraction for WSGI concepts
+A tiny web framework, abstracting WSGI concepts as Request/Response classes
 '''
 
 from urllib.parse import parse_qs
@@ -61,7 +61,7 @@ class Response:
             yield i if isinstance(i, bytes) else i.encode(self._encoding)
 
 
-def app_wrapper(func):
+def wrapper(func):
     '''
     Wrap a request-in response-out application as a WSGI-callable function
     '''
@@ -71,14 +71,3 @@ def app_wrapper(func):
         start_response(res.status, res.headers)
         return iter(res)
     return application
-
-@app_wrapper
-def req_res_app(request: Request) -> Response:
-    '''
-    Main app; Greet the incoming 'name' query element if availabe;
-    otherwise, greet the World!
-    '''
-    names = ' & '.join([i for i in request.queries.get('name', ['World']) if len(i) > 0 and i != ' '])
-    message = f'<h1>Hello, {names}!</h1>'
-    res = Response(body=[message])
-    return res
